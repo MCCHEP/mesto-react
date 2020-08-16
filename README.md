@@ -14,4 +14,4 @@
 
 Ссылка на Github pages:
 
-(https://mcchep.github.io/mesto-react/)
+https://mcchep.github.io/mesto-react/
