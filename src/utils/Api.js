@@ -27,7 +27,8 @@ class Api {
         method: 'GET',
         headers: this._headers
       })
-      .then(this._prepareData);
+      .then(this._prepareData)
+      .catch(err => console.log(`Загрузка карточек с сервера: ${err}`));;
   }
 
   getProfileData() {
@@ -36,23 +37,17 @@ class Api {
         method: 'GET',
         headers: this._headers
       })
-      .then(this._prepareData);
+      .then(this._prepareData)
+      .catch(err => console.log(`Загрузка информации о пользователе: ${err}`));
   }
 
-  dislike(itemId) {
+  updateCardlikes(itemId, method) {
     return fetch(`${this._url}/v1/${this._groupId}/cards/likes/${itemId}`,
       {
-        method: 'DELETE',
+        method: method === 'like' ? 'PUT' : 'DELETE',
         headers: this._headers
-      }).then(this._prepareData);
-  }
-
-  like(itemId) {
-    return fetch(`${this._url}/v1/${this._groupId}/cards/likes/${itemId}`,
-      {
-        method: 'PUT',
-        headers: this._headers
-      }).then(this._prepareData);
+      }).then(this._prepareData)
+      .catch(err => console.log(`Передача информации о лайке/дизлайке: ${err}`));;
   }
 
   deleteCard(cardId) {
@@ -60,7 +55,8 @@ class Api {
       {
         method: 'DELETE',
         headers: this._headers
-      }).then(this._prepareData);;
+      }).then(this._prepareData)
+      .catch(err => console.log(`Удаление карточки с сервера: ${err}`));;
   }
 
   createCard(name, link) {
@@ -72,7 +68,8 @@ class Api {
           name: name,
           link: link
         })
-      }).then(this._prepareData);
+      }).then(this._prepareData)
+      .catch(err => console.log(`Добавление карточки на сервер: ${err}`));;
   }
 
   updateProfile(name, about) {
@@ -83,7 +80,8 @@ class Api {
         name: name,
         about: about
       })
-    }).then(this._prepareData);
+    }).then(this._prepareData)
+      .catch(err => console.log(`Обновление профиля пользователя: ${err}`));;
   }
 
   updateAvatar(avatarLink) {
@@ -93,7 +91,8 @@ class Api {
       body: JSON.stringify({
         avatar: avatarLink
       })
-    }).then(this._prepareData);
+    }).then(this._prepareData)
+      .catch(err => console.log(`Обновление аватара: ${err}`));;
   }
 }
 
