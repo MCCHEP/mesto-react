@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { mestoApi } from "../utils/Api";
+import { mestoApi } from "../utils/api";
 import Card from "./Card";
 
 function Main(props) {
@@ -9,21 +9,11 @@ function Main(props) {
   const [cards, setCards] = useState([]);
 
   React.useEffect(() => {
-    mestoApi.getProfileData()
-      .then((result) => {
+    Promise.all([mestoApi.getProfileData(), mestoApi.getInitalCards()])
+      .then(([result, data]) => {
         setUserName(result.name);
         setUserDescription(result.about);
         setUserAvatar(result.avatar);
-      })
-      .catch((err) => {
-        console.log(err); // выведем ошибку в консоль
-      });
-
-  }, []);
-
-  React.useEffect(() => {
-    mestoApi.getInitalCards()
-      .then((data) => {
         setCards(data);
       })
       .catch((err) => {
@@ -47,11 +37,7 @@ function Main(props) {
       </section>
       <section className="gallery page__gallery">
         <ul className="elements">
-          {cards.map((card) => {
-            return (
-              <Card card={card} key={card._id} onCardClick={props.onCardClick} />
-            );
-          })}
+          {cards.map((card) => <Card card={card} key={card._id} onCardClick={props.onCardClick} />)}
         </ul>
       </section>
     </main>
