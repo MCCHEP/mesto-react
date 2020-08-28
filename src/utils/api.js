@@ -41,10 +41,10 @@ class Api {
       .catch(err => console.log(`Загрузка информации о пользователе: ${err}`));
   }
 
-  updateCardlikes(itemId, method) {
+  changeLikeCardStatus(itemId, isLiked) {
     return fetch(`${this._url}/v1/${this._groupId}/cards/likes/${itemId}`,
       {
-        method: method === 'like' ? 'PUT' : 'DELETE',
+        method: isLiked ? 'PUT' : 'DELETE',
         headers: this._headers
       }).then(this._prepareData)
       .catch(err => console.log(`Передача информации о лайке/дизлайке: ${err}`));;

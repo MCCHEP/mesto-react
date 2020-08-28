@@ -1,43 +1,27 @@
-import React, { useState } from 'react';
-import { mestoApi } from "../utils/api";
+import React from 'react';
 import Card from "./Card";
+import { CurrentUserContext } from '../contexts/CurrentUserContext';
 
 function Main(props) {
-  const [userName, setUserName] = useState('');
-  const [userDescription, setUserDescription] = useState('');
-  const [userAvatar, setUserAvatar] = useState('');
-  const [cards, setCards] = useState([]);
-
-  React.useEffect(() => {
-    Promise.all([mestoApi.getProfileData(), mestoApi.getInitalCards()])
-      .then(([result, data]) => {
-        setUserName(result.name);
-        setUserDescription(result.about);
-        setUserAvatar(result.avatar);
-        setCards(data);
-      })
-      .catch((err) => {
-        console.log(err); // выведем ошибку в консоль
-      });
-  }, []);
+  const currentUser = React.useContext(CurrentUserContext);
 
   return (
     <main className="content">
       <section className="profile page__profile">
         <div className="profile__avatar-container">
           <button className="profile__edit-avatar-button" type="button" aria-label="Сменить аватар" onClick={props.onEditAvatar}></button>
-          <img src={userAvatar} alt="Фотография профиля" className="profile__avatar" />
+          <img src={currentUser.avatar} alt="Фотография профиля" className="profile__avatar" />
         </div>
         <div className="profile__info">
-          <h1 className="profile__name">{userName}</h1>
+          <h1 className="profile__name">{currentUser.name}</h1>
           <button className="profile__edit-button" type="button" aria-label="Редактировать профиль" onClick={props.onEditProfile}></button>
-          <p className="profile__occupation">{userDescription}</p>
+          <p className="profile__occupation">{currentUser.about}</p>
         </div>
         <button className="profile__add-button" type="button" aria-label="Добавить фото" onClick={props.onAddPlace}></button>
       </section>
       <section className="gallery page__gallery">
         <ul className="elements">
-          {cards.map((card) => <Card card={card} key={card._id} onCardClick={props.onCardClick} />)}
+          {props.cards.map((card) => <Card card={card} key={card._id} onCardClick={props.onCardClick} onCardLike={props.onCardLike} onCardDelete={props.onCardDelete} />)}
         </ul>
       </section>
     </main>
