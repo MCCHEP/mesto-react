@@ -27,8 +27,7 @@ class Api {
         method: 'GET',
         headers: this._headers
       })
-      .then(this._prepareData)
-      .catch(err => console.log(`Загрузка карточек с сервера: ${err}`));;
+      .then(this._prepareData);
   }
 
   getProfileData() {
@@ -37,8 +36,7 @@ class Api {
         method: 'GET',
         headers: this._headers
       })
-      .then(this._prepareData)
-      .catch(err => console.log(`Загрузка информации о пользователе: ${err}`));
+      .then(this._prepareData);
   }
 
   changeLikeCardStatus(itemId, isLiked) {
@@ -46,8 +44,7 @@ class Api {
       {
         method: isLiked ? 'PUT' : 'DELETE',
         headers: this._headers
-      }).then(this._prepareData)
-      .catch(err => console.log(`Передача информации о лайке/дизлайке: ${err}`));;
+      }).then(this._prepareData);
   }
 
   deleteCard(cardId) {
@@ -55,8 +52,7 @@ class Api {
       {
         method: 'DELETE',
         headers: this._headers
-      }).then(this._prepareData)
-      .catch(err => console.log(`Удаление карточки с сервера: ${err}`));;
+      }).then(this._prepareData);
   }
 
   createCard(name, link) {
@@ -68,8 +64,7 @@ class Api {
           name: name,
           link: link
         })
-      }).then(this._prepareData)
-      .catch(err => console.log(`Добавление карточки на сервер: ${err}`));;
+      }).then(this._prepareData);
   }
 
   updateProfile(name, about) {
@@ -80,8 +75,7 @@ class Api {
         name: name,
         about: about
       })
-    }).then(this._prepareData)
-      .catch(err => console.log(`Обновление профиля пользователя: ${err}`));;
+    }).then(this._prepareData);
   }
 
   updateAvatar(avatarLink) {
@@ -91,8 +85,7 @@ class Api {
       body: JSON.stringify({
         avatar: avatarLink
       })
-    }).then(this._prepareData)
-      .catch(err => console.log(`Обновление аватара: ${err}`));;
+    }).then(this._prepareData);
   }
 }
 
